@@ -17,7 +17,7 @@ function buildCharts(id) {
         // Get labels for hover
         var labels = samples.otu_labels.slice(0, 10);
 
-        // Create trace
+        // Create trace and layout
         var barData = [{
             x: topSamples,
             y: otuID,
@@ -38,8 +38,33 @@ function buildCharts(id) {
                 b: 30
             }
         }
-
+        // Create plot
         Plotly.newPlot("bar", barData, barLayout);
+
+        // Create bubble chart
+
+        // Create trace and layout
+        var bubbleData =[{
+            x: topOTU,
+            y: topSamples,
+            mode: "markers",
+            marker: {
+                size: topSamples,
+                color: topOTU
+            },
+            text: labels
+        }];
+
+        var bubbleLayout = {
+            xaxis: {
+                title: "OTU ID"
+            },
+            height: 600,
+            width: 1000
+        };
+
+        // Build bubble chart
+        Plotly.newPlot("bubble", bubbleData, bubbleLayout);
     });
 }
 
