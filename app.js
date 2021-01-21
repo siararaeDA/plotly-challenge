@@ -30,6 +30,7 @@ function buildCharts(id) {
         }];
 
         var barLayout = {
+            title: "Top 10 Samples",
             yaxis: {
                 tickmode: "linear"
             },
