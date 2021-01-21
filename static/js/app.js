@@ -1,4 +1,4 @@
-function getData(id) {
+function buildBarChart(id) {
     d3.json("../../data/samples.json").then((data) => {
         console.log(data);
 
@@ -7,6 +7,22 @@ function getData(id) {
         console.log(metadata);
     });
 }
+
+function buildBubbleChart(id) {
+
+}
+
+function displayMetadata(id) {
+
+}
+
+// Function called when dropdown value changes
+function optionChanged(id) {
+    buildBarChart(id);
+    buildBubbleChart(id);
+    displayMetadata(id);
+}
+
 // Initalize page
 function init() {
     // Select the dropdown menu
@@ -20,8 +36,13 @@ function init() {
             dropdown.append("option").text(bbID).property("value");
         });
     });
+
+    // Update horizontal bar chart
+
+    // Update bubble chart
+
+    // Updata metadata display
 }
 
 init();
-getData();
   
