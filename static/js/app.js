@@ -2,9 +2,10 @@ function buildBarChart(id) {
     d3.json("../../data/samples.json").then((data) => {
         console.log(data);
 
-        var metadata = data.metadata;
-
-        console.log(metadata);
+        // Build bar chart
+        var samples = data.samples;
+        console.log(samples);
+    
     });
 }
 
@@ -35,13 +36,12 @@ function init() {
         data.names.forEach(function(bbID) {
             dropdown.append("option").text(bbID).property("value");
         });
-    });
 
-    // Update horizontal bar chart
-
-    // Update bubble chart
-
-    // Updata metadata display
+        // Update/display charts
+        buildBarChart(data.names[0]);
+        buildBubbleChart(data.names[0]);
+        displayMetadata(data.names[0]);
+    });  
 }
 
 init();
