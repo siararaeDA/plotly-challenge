@@ -1,5 +1,5 @@
 function buildCharts(id) {
-    d3.json("../../data/samples.json").then((data) => {
+    d3.json("data/samples.json").then((data) => {
         console.log(data);
 
         // Build bar chart
@@ -73,7 +73,7 @@ function buildCharts(id) {
 }
 
 function displayMetadata(id) {
-    d3.json("../../data/samples.json").then((data) => {
+    d3.json("data/samples.json").then((data) => {
         // Save metadata into variable
         var metadata = data.metadata;
         console.log("Meta", metadata);
@@ -106,7 +106,7 @@ function init() {
     // Select the dropdown menu
     var dropdown = d3.select("#selDataset")
     // Read in the data
-    d3.json("../../data/samples.json").then((data) => {
+    d3.json("data/samples.json").then((data) => {
         console.log(data);
 
         // Add the id's to the dropdown
