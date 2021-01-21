@@ -5,7 +5,7 @@ function buildCharts(id) {
         // Build bar chart
 
         // Filter samples by ID
-        var samples = data.samples.filter(s => s.id.toString() === id)[0];;
+        var samples = data.samples.filter(sample => sample.id === id)[0];;
         console.log(samples);
 
         // Get the top 10 samples
@@ -23,19 +23,21 @@ function buildCharts(id) {
             y: otuID,
             text: labels,
             type: "bar",
+            marker: {
+                color: "#e31478"
+            },
             orientation: "h"
         }];
 
         var barLayout = {
-            title: "Top 10 OTU's",
             yaxis: {
                 tickmode: "linear"
             },
             margin: {
-                l: 100,
-                r: 100,
-                t: 100,
-                b: 30
+                l: 80,
+                r: 50,
+                t: 50,
+                b: 20
             }
         }
         // Create plot
@@ -50,17 +52,19 @@ function buildCharts(id) {
             mode: "markers",
             marker: {
                 size: topSamples,
-                color: topOTU
+                color: topOTU,
+                colorscale: "Rainbow"
             },
             text: labels
         }];
 
         var bubbleLayout = {
+            title: "Bacteria Cultures per Sample",
             xaxis: {
                 title: "OTU ID"
             },
-            height: 600,
-            width: 1000
+            height: 500,
+            width: 900
         };
 
         // Build bubble chart
@@ -69,7 +73,26 @@ function buildCharts(id) {
 }
 
 function displayMetadata(id) {
+    d3.json("../../data/samples.json").then((data) => {
+        // Save metadata into variable
+        var metadata = data.metadata;
+        console.log("Meta", metadata);
 
+        // Find the metadata for the selected ID
+        var idInfo = metadata.filter(meta => meta.id.toString() === id)[0];
+
+        // Select display item
+        dataDisplay = d3.select('#sample-metadata');
+
+        // Clear old data
+        dataDisplay.html("");
+
+        // Fill out the display
+        Object.entries(idInfo).forEach((key)=> {
+            dataDisplay.append("p").text(key[0] + ": " + key[1] + "\n");
+
+        });
+    });
 }
 
 // Function called when dropdown value changes
