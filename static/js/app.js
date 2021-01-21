@@ -1,16 +1,46 @@
-function buildBarChart(id) {
+function buildCharts(id) {
     d3.json("../../data/samples.json").then((data) => {
         console.log(data);
 
         // Build bar chart
-        var samples = data.samples;
+
+        // Filter samples by ID
+        var samples = data.samples.filter(s => s.id.toString() === id)[0];;
         console.log(samples);
-    
+
+        // Get the top 10 samples
+        var topSamples = samples.sample_values.slice(0, 10).reverse();
+        // Get the top 10 OTU's
+        var topOTU = (samples.otu_ids.slice(0, 10)).reverse();
+        // Format OTU ID's
+        var otuID = topOTU.map(d => "OTU " + d);
+        // Get labels for hover
+        var labels = samples.otu_labels.slice(0, 10);
+
+        // Create trace
+        var barData = [{
+            x: topSamples,
+            y: otuID,
+            text: labels,
+            type: "bar",
+            orientation: "h"
+        }];
+
+        var barLayout = {
+            title: "Top 10 OTU's",
+            yaxis: {
+                tickmode: "linear"
+            },
+            margin: {
+                l: 100,
+                r: 100,
+                t: 100,
+                b: 30
+            }
+        }
+
+        Plotly.newPlot("bar", barData, barLayout);
     });
-}
-
-function buildBubbleChart(id) {
-
 }
 
 function displayMetadata(id) {
@@ -19,8 +49,7 @@ function displayMetadata(id) {
 
 // Function called when dropdown value changes
 function optionChanged(id) {
-    buildBarChart(id);
-    buildBubbleChart(id);
+    buildCharts(id);
     displayMetadata(id);
 }
 
@@ -38,8 +67,7 @@ function init() {
         });
 
         // Update/display charts
-        buildBarChart(data.names[0]);
-        buildBubbleChart(data.names[0]);
+        buildCharts(data.names[0]);
         displayMetadata(data.names[0]);
     });  
 }
